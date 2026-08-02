@@ -1,0 +1,24 @@
+# Build output
+target/
+
+# Local database
+data/
+
+# Logs
+*.log
+boot.log
+
+# Maven wrapper jar
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
