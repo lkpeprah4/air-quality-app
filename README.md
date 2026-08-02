@@ -2,7 +2,7 @@
 
 A Spring Boot API that tracks air quality across Ghanaian cities and turns it into practical health guidance. It sits between the frontend and OpenWeatherMap, keeps the API key off the browser, logs every reading to a database, and runs the health-risk logic that answers: given this air quality and this health profile, what should someone do about it?
 
-**Live app / frontend repo:**https://github.com/lkpeprah4/air-quality-app-frontend
+**Live app / frontend repo:** https://github.com/lkpeprah4/air-quality-app-frontend
 
 
 ## Tech stack
