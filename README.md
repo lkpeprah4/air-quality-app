@@ -103,4 +103,4 @@ MIT — see [LICENSE](LICENSE).
 
 ## Status
 
-Personal/student project. Not currently accepting contributions, but feel free to fork or open an issue if something's broken.
+Personal/student project.feel free to fork or open an issue if something's broken.
