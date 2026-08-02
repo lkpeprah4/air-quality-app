@@ -1,0 +1,82 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------< com.ghanaairwatch:ghana-airwatch-backend >--------------
+[INFO] Building ghana-airwatch-backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.4:run (default-cli) > test-compile @ ghana-airwatch-backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ ghana-airwatch-backend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ ghana-airwatch-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ ghana-airwatch-backend ---
+[INFO] skip non existing resourceDirectory C:\Users\akous\Downloads\ghana-airwatch-backend\ghana-airwatch-backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ ghana-airwatch-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.3.4:run (default-cli) < test-compile @ ghana-airwatch-backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.4:run (default-cli) @ ghana-airwatch-backend ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-08-02T14:42:53.087Z  INFO 14704 --- [           main] c.g.GhanaAirwatchBackendApplication      : Starting GhanaAirwatchBackendApplication using Java 21.0.9 with PID 14704 (C:\Users\akous\Downloads\ghana-airwatch-backend\ghana-airwatch-backend\target\classes started by akous in C:\Users\akous\Downloads\ghana-airwatch-backend\ghana-airwatch-backend)
+2026-08-02T14:42:53.087Z  INFO 14704 --- [           main] c.g.GhanaAirwatchBackendApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-08-02T14:42:54.423Z  INFO 14704 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-02T14:42:54.681Z  INFO 14704 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 245 ms. Found 4 JPA repository interfaces.
+2026-08-02T14:42:55.373Z  INFO 14704 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-08-02T14:42:55.389Z  INFO 14704 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-08-02T14:42:55.391Z  INFO 14704 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2026-08-02T14:42:55.469Z  INFO 14704 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-08-02T14:42:55.469Z  INFO 14704 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2264 ms
+2026-08-02T14:42:55.497Z  INFO 14704 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-08-02T14:42:55.893Z  INFO 14704 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./data/airwatch user=SA
+2026-08-02T14:42:55.897Z  INFO 14704 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-08-02T14:42:55.915Z  INFO 14704 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/airwatch'
+2026-08-02T14:42:56.031Z  INFO 14704 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-08-02T14:42:56.105Z  INFO 14704 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-08-02T14:42:56.148Z  INFO 14704 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-08-02T14:42:56.514Z  INFO 14704 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-02T14:42:57.718Z  INFO 14704 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-02T14:42:57.788Z  INFO 14704 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-02T14:42:58.570Z  WARN 14704 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-02T14:42:58.583Z  WARN 14704 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 9fc17c45-7fb7-4ba8-9360-07a50f891880
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-08-02T14:42:58.593Z  INFO 14704 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-08-02T14:42:59.439Z  INFO 14704 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-08-02T14:42:59.448Z  INFO 14704 --- [           main] c.g.GhanaAirwatchBackendApplication      : Started GhanaAirwatchBackendApplication in 6.98 seconds (process running for 7.471)
+2026-08-02T15:21:11.482Z  INFO 14704 --- [nio-8080-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-08-02T15:21:11.769Z  INFO 14704 --- [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-08-02T15:21:12.685Z  INFO 14704 --- [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 907 ms
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  38:49 min
+[INFO] Finished at: 2026-08-02T15:21:38Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.3.4:run (default-cli) on project ghana-airwatch-backend: Process terminated with exit code: -1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
