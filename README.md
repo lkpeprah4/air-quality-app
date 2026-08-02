@@ -1,99 +1,106 @@
 # Ghana AirWatch — Backend
 
-The Spring Boot server behind the AirWatch app. It talks to OpenWeatherMap on
-your behalf (so the API key never sits in the browser), saves every reading
-to a local database, and answers the health-analytics question: "given this
-air quality and this health profile, what should I do?"
+A Spring Boot API that tracks air quality across Ghanaian cities and turns it into practical health guidance. It sits between the frontend and OpenWeatherMap, keeps the API key off the browser, logs every reading to a database, and runs the health-risk logic that answers: given this air quality and this health profile, what should someone do about it?
 
-## What you need installed
+**Live app / frontend repo:** _add links here_
 
-- **Java 21** — you already have this ✅
-- **Maven** — you don't need to install this. This project includes a
-  "wrapper" (`mvnw.cmd`) that downloads the right Maven version automatically
-  the first time you run it.
+## Tech stack
 
-## How to run it
+- Java 21, Spring Boot 3
+- Spring Data JPA + H2 (file-based)
+- Spring Security + JWT for auth
+- Maven (via wrapper, no separate install needed)
 
-**1. Open a terminal in this folder** (the one with `pom.xml` in it).
+## Requirements
 
-**2. Set your OpenWeatherMap API key** as an environment variable, so it's
-never hardcoded into a file. In PowerShell:
+- Java 21
+- Nothing else — the project ships with a Maven wrapper (`mvnw.cmd`), so you don't need Maven installed separately.
+
+## Running it locally
+
+Open a terminal in this folder (the one with `pom.xml`).
+
+Set your OpenWeatherMap key as an environment variable so it doesn't end up hardcoded anywhere:
+
+```powershell
+$env:OWM_API_KEY="your_real_key_here"
 ```
-$env:OWM_API_KEY="your_real_key_here"h
-```
-(You'll need to do this each time you open a new terminal window — later we
-can make it permanent if you want.)
 
-**3. Start the server:**
-```
+You'll need to set this again each time you open a new terminal, unless you make it permanent later.
+
+Then start the server:
+
+```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-The first run will take a few minutes — it's downloading Maven itself plus
-all the project's dependencies. That's normal, just let it finish.
+First run takes a few minutes since it's pulling down Maven and all the dependencies. After that it's quick.
 
-**4. Confirm it's running.** Once you see a line like:
+Once you see:
+
 ```
 Started GhanaAirwatchBackendApplication in X seconds
 ```
-open your browser to:
-```
-http://localhost:8080/api/locations
-```
-You should see a JSON list of Ghanaian cities. That confirms the backend,
-the database, and the seed data all worked.
 
-## What's actually happening under the hood
+check `http://localhost:8080/api/locations` in a browser. If you get back a JSON list of Ghanaian cities, the backend, database, and seed data are all working.
 
-- **On first startup**, it creates a local database file (`data/airwatch.mv.db`)
-  and fills it with the 10 Ghana cities.
-- **Every time the frontend asks for air quality**, this backend calls
-  OpenWeatherMap itself, converts the result, saves a copy to the database,
-  and sends it back. That saved copy is what builds up real history over time.
-- **The `/api/health-analytics` endpoint** applies the health-risk rules
-  (same ones as the frontend, but now living in one trusted place) and
-  returns plain-language advice.
+## How it works
 
-## API endpoints
+On first startup it creates a local H2 database file at `data/airwatch.mv.db` and seeds it with 10 Ghanaian cities.
 
-**Public — no login needed:**
+Every time the frontend requests air quality data, the backend calls OpenWeatherMap, converts the response, saves a copy to the database, and returns it. Those saved copies are what build up real history over time instead of just point-in-time snapshots.
 
-| Method | URL | What it does |
+`/api/health-analytics` runs the same health-risk rules the frontend used to run client-side, but now from one trusted place, and returns plain-language advice.
+
+## API reference
+
+### Public endpoints
+
+| Method | URL | Description |
 |---|---|---|
 | GET | `/api/locations` | List all Ghanaian cities |
-| GET | `/api/air-quality?locationId=1` | Current AQI + pollutants (incl. SO₂) + weather (also logs it) |
-| GET | `/api/air-quality/history?locationId=1&days=7` | Real stored history |
+| GET | `/api/air-quality?locationId=1` | Current AQI, pollutants (incl. SO₂), and weather — also logs the reading |
+| GET | `/api/air-quality/history?locationId=1&days=7` | Stored historical readings |
 | GET | `/api/weather?locationId=1` | Temperature, humidity, wind, pressure, rain |
-| GET | `/api/predictions?locationId=1` | AQI forecast: +1h, +6h, tomorrow (linear regression) |
+| GET | `/api/predictions?locationId=1` | AQI forecast for +1h, +6h, tomorrow (linear regression) |
 | GET | `/api/health-analytics?locationId=1&profile=asthma` | Quick health guidance |
-| POST | `/api/health-risk?locationId=1` | Full risk engine — body: `{"age":32,"asthma":true,"heartDisease":false,"pregnancy":false,"outdoorActivity":"high","smoking":"none"}` → Low/Moderate/High/Very High + advice |
-| POST | `/api/health-score?locationId=1` | Daily health score /100 (same body as health-risk) |
-| GET | `/api/exposure?locationId=1&hours=6&activity=jogging` | Exposure calculator (activity: resting/walking/jogging/sports) |
-| GET | `/api/chat?locationId=1&q=Can I jog today?` | Rule-based AI assistant (uses live AQI + weather) |
+| POST | `/api/health-risk?locationId=1` | Full risk engine. Body: `{"age":32,"asthma":true,"heartDisease":false,"pregnancy":false,"outdoorActivity":"high","smoking":"none"}` → returns Low/Moderate/High/Very High plus advice |
+| POST | `/api/health-score?locationId=1` | Daily health score out of 100 (same request body as above) |
+| GET | `/api/exposure?locationId=1&hours=6&activity=jogging` | Exposure calculator (`activity`: resting/walking/jogging/sports) |
+| GET | `/api/chat?locationId=1&q=Can I jog today?` | Rule-based assistant using live AQI + weather |
 | GET | `/api/compare?locationIds=1,2` | Compare AQI, PM2.5, temperature, humidity across cities |
-| GET | `/api/alerts/check?locationId=1` | Notification trigger check (alert when AQI > 150) |
-| GET | `/api/heatmap` | Interpolated AQI grid across Ghana for the pollution map |
+| GET | `/api/alerts/check?locationId=1` | Checks whether AQI has crossed the alert threshold (150) |
+| GET | `/api/heatmap` | Interpolated AQI grid across Ghana, for the pollution map |
 
-**Registered users (need a login token):**
+### Authenticated endpoints
 
-| Method | URL | What it does |
+Require a JWT from login/register, sent as `Authorization: Bearer <token>`.
+
+| Method | URL | Description |
 |---|---|---|
-| POST | `/api/auth/register` | Body: `{"username","email","password"}` → returns JWT token |
-| POST | `/api/auth/login` | Body: `{"username","password"}` → returns JWT token |
-| GET | `/api/users/me/favorites` | List my saved locations (send `Authorization: Bearer <token>`) |
+| POST | `/api/auth/register` | Body: `{"username","email","password"}` → returns a token |
+| POST | `/api/auth/login` | Body: `{"username","password"}` → returns a token |
+| GET | `/api/users/me/favorites` | List saved locations |
 | POST | `/api/users/me/favorites?locationId=1` | Save a location |
 | DELETE | `/api/users/me/favorites/{id}` | Remove a saved location |
 
-## Viewing the database directly (optional, just for curiosity)
+## Project structure
 
-1. With the app running, go to `http://localhost:8080/h2-console`
-2. JDBC URL: `jdbc:h2:file:./data/airwatch`
-3. Username: `sa`, password: (leave blank)
-4. Click Connect — you can browse the `LOCATIONS` and `AIR_QUALITY_READINGS`
-   tables directly.
+```
+src/main/java/com/ghanaairwatch/
+├── controller/   # REST endpoints
+├── service/      # business logic (AQI predictions, health risk, chat, etc.)
+├── repository/   # Spring Data JPA repositories
+├── entity/       # database models
+├── dto/          # request/response objects
+├── security/     # JWT auth
+└── config/       # CORS, data seeding
+```
 
-## Next step
+## License
 
-Once this is running, we switch the React frontend to call this backend
-instead of OpenWeatherMap directly — that's a one-line change in
-`airQualityService.js`.
+MIT — see [LICENSE](LICENSE).
+
+## Status
+
+Personal/student project. Not currently accepting contributions, but feel free to fork or open an issue if something's broken.
